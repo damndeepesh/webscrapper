@@ -17,9 +17,9 @@ setup(
     description='A CLI tool to scrape websites and extract info using Gemini or Groq.',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    url='https://github.com/damndeepesh/ai-web-scraper-cli', # Replace with your repo URL
+    url='https://github.com/damndeepesh/webscrapper', # Replace with your repo URL
     project_urls={
-        'Bug Tracker': 'https://github.com/damndeepesh/ai-web-scraper-cli/issues', # Replace
+        'Bug Tracker': 'https://github.com/damndeepesh/webscrapperissues', # Replace
     },
     classifiers=[
         'Programming Language :: Python :: 3',
