@@ -1,0 +1,12 @@
+crawl4ai
+google-generativeai
+groq
+python-dotenv
+click
+openai
+ollama
+requests
+beautifulsoup4
+aiohttp
+rich
+playwright

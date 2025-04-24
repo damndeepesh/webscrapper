@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ai-web-scraper-cli"
+version = "0.1.1" # Incrementing version slightly
+authors = [
+  { name="Deepesh", email="damndeepesh@gmail.com" }, # Updated placeholder
+]
+description = "A CLI tool to scrape websites, download files, generate sitemaps, and extract info using AI models."
+readme = "README.md"
+requires-python = ">=3.8" # Updated based on common modern practices
+license = {text = "MIT License"} # Specify license type
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Intended Audience :: Developers",
+    "Topic :: Internet :: WWW/HTTP :: Indexing/Search",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Text Processing",
+    "Development Status :: 3 - Alpha", # Added development status
+]
+dependencies = [
+    "crawl4ai",
+    "google-generativeai",
+    "groq",
+    "python-dotenv",
+    "click",
+    "openai",
+    "ollama",
+    "requests",
+    "beautifulsoup4",
+    "aiohttp",
+    "rich",
+    "playwright",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/damndeepesh/ai-web-scraper-cli" # Updated placeholder
+"Bug Tracker" = "https://github.com/damndeepesh/ai-web-scraper-cli/issues" # Updated placeholder
+
+[project.scripts]
+ai-scrape = "cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]  # look in the src/ directory for packages

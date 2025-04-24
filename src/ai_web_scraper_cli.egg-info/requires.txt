@@ -1,0 +1,5 @@
+crawl4ai
+google-generativeai
+groq
+python-dotenv
+click
