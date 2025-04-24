@@ -19,7 +19,7 @@ setup(
     long_description_content_type='text/markdown',
     url='https://github.com/damndeepesh/webscrapper', # Replace with your repo URL
     project_urls={
-        'Bug Tracker': 'https://github.com/damndeepesh/webscrapperissues', # Replace
+        'Bug Tracker': 'https://github.com/damndeepesh/webscrapper/issues', # Replace
     },
     classifiers=[
         'Programming Language :: Python :: 3',

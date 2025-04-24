@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "ai-web-scraper-cli"
 version = "0.1.1" # Incrementing version slightly
 authors = [
-  { name="Deepesh", email="damndeepesh@gmail.com" }, # Updated placeholder
+  { name="Deepesh", email="damndeepesh@tutanota.com" }, # Updated placeholder
 ]
 description = "A CLI tool to scrape websites, download files, generate sitemaps, and extract info using AI models."
 readme = "README.md"
@@ -38,8 +38,8 @@ dependencies = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/damndeepesh/ai-web-scraper-cli" # Updated placeholder
-"Bug Tracker" = "https://github.com/damndeepesh/ai-web-scraper-cli/issues" # Updated placeholder
+"Homepage" = "https://github.com/damndeepesh/webscrapper/" # Updated placeholder
+"Bug Tracker" = "https://github.com/damndeepesh/webscrapper/issues" # Updated placeholder
 
 [project.scripts]
 ai-scrape = "cli:main"
