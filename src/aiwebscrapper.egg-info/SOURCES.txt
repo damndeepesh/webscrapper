@@ -1,0 +1,9 @@
+LICENSE
+README.md
+pyproject.toml
+src/aiwebscrapper.egg-info/PKG-INFO
+src/aiwebscrapper.egg-info/SOURCES.txt
+src/aiwebscrapper.egg-info/dependency_links.txt
+src/aiwebscrapper.egg-info/entry_points.txt
+src/aiwebscrapper.egg-info/requires.txt
+src/aiwebscrapper.egg-info/top_level.txt

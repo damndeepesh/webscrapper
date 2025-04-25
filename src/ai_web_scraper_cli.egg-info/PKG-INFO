@@ -2,11 +2,11 @@ Metadata-Version: 2.1
 Name: ai-web-scraper-cli
 Version: 0.1.0
 Summary: A CLI tool to scrape websites and extract info using Gemini or Groq.
-Home-page: https://github.com/yourusername/ai-web-scraper-cli
-Author: Your Name
-Author-email: your.email@example.com
+Home-page: https://github.com/damndeepesh/webscrapper
+Author: Deepesh
+Author-email: damndeepesh@tutanota.com
 License: UNKNOWN
-Project-URL: Bug Tracker, https://github.com/yourusername/ai-web-scraper-cli/issues
+Project-URL: Bug Tracker, https://github.com/damndeepesh/webscrapper/issues
 Description: # AI Web Scraper CLI
         
         A Command-Line Interface (CLI) tool to scrape web pages and extract structured information using either the Google Gemini or Groq AI APIs.
@@ -85,6 +85,41 @@ Description: # AI Web Scraper CLI
             ```
         
         The tool will first ask for the API type and URL if not provided via options. If the API key is not found in the `.env` file, it will prompt you to enter it.
+        
+        **Important:** The tool uses Playwright for web scraping. Upon first run, it will check if the necessary Playwright browser dependencies are installed. If they are missing, you will be prompted to run the following command:
+        
+        ```bash
+        playwright install --with-deps
+        ```
+        
+        Please run this command if prompted to ensure the scraper functions correctly.
+        
+        ## Building and Distributing
+        
+        This project uses `pyproject.toml` for configuration.
+        
+        1.  **Install build tools:**
+            ```bash
+            python -m pip install --upgrade build twine
+            ```
+        
+        2.  **Build the package:**
+            ```bash
+            python -m build
+            ```
+            This will create `dist/` directory with the source distribution (`.tar.gz`) and wheel (`.whl`) files.
+        
+        3.  **Upload to PyPI:**
+            *   **TestPyPI (Recommended first):**
+                ```bash
+                twine upload --repository testpypi dist/*
+                ```
+                You'll need an account on [TestPyPI](https://test.pypi.org/).
+            *   **PyPI (Live):**
+                ```bash
+                twine upload dist/*
+                ```
+                You'll need an account on [PyPI](https://pypi.org/).
         
         ## License
         

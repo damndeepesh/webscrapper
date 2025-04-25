@@ -1,0 +1,150 @@
+Metadata-Version: 2.4
+Name: aiwebscrapper
+Version: 0.1.6
+Summary: A CLI tool to scrape websites, download files, generate sitemaps, and extract info using AI models.
+Author-email: Deepesh <damndeepesh@tutanota.com>
+License: MIT License
+Project-URL: Homepage, https://github.com/damndeepesh/webscrapper/
+Project-URL: Bug Tracker, https://github.com/damndeepesh/webscrapper/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Internet :: WWW/HTTP :: Indexing/Search
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Classifier: Topic :: Text Processing
+Classifier: Development Status :: 3 - Alpha
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: crawl4ai
+Requires-Dist: google-generativeai
+Requires-Dist: groq
+Requires-Dist: python-dotenv
+Requires-Dist: click
+Requires-Dist: openai
+Requires-Dist: ollama
+Requires-Dist: requests
+Requires-Dist: beautifulsoup4
+Requires-Dist: aiohttp
+Requires-Dist: rich
+Requires-Dist: playwright
+Dynamic: license-file
+
+# AI Web Scraper CLI
+
+A Command-Line Interface (CLI) tool to scrape web pages and extract structured information using either the Google Gemini or Groq AI APIs.
+
+## Features
+
+*   Scrapes web content using `crawl4ai`.
+*   Integrates with Google Gemini and Groq APIs for information extraction.
+*   Prompts user for API choice (Gemini/Groq).
+*   Securely handles API keys using a `.env` file.
+*   Allows custom prompts for AI extraction.
+*   Designed to be installable as a Python package.
+
+## Installation
+
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/yourusername/ai-web-scraper-cli # Replace with your repo URL
+    cd ai-web-scraper-cli
+    ```
+
+2.  **Create a virtual environment (recommended):**
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate # On Windows use `venv\Scripts\activate`
+    ```
+
+3.  **Install dependencies:**
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+4.  **Install the package in editable mode (for development):**
+    ```bash
+    pip install -e .
+    ```
+    Or, for a regular installation:
+    ```bash
+    pip install .
+    ```
+
+## Configuration
+
+The tool uses a `.env` file to store your API keys securely. When you run the tool for the first time for a specific API (Gemini or Groq), it will prompt you for the key and save it to a `.env` file in the project's root directory.
+
+Alternatively, you can create a `.env` file manually in the project root:
+
+```
+GEMINI_API_KEY=YOUR_GEMINI_API_KEY
+GROQ_API_KEY=YOUR_GROQ_API_KEY
+```
+
+Replace `YOUR_GEMINI_API_KEY` and `YOUR_GROQ_API_KEY` with your actual keys.
+
+*   Get Gemini API Key: [Google AI Studio](https://aistudio.google.com/app/apikey)
+*   Get Groq API Key: [Groq Console](https://console.groq.com/keys)
+
+## Usage
+
+After installation, you can run the tool using the `ai-scrape` command:
+
+```bash
+ai-scrape --api [gemini|groq] --url <WEBSITE_URL> [--prompt "Your custom extraction prompt"]
+```
+
+**Examples:**
+
+*   Scrape using Gemini with the default prompt:
+    ```bash
+    ai-scrape --api gemini --url https://example.com
+    ```
+
+*   Scrape using Groq with a custom prompt:
+    ```bash
+    ai-scrape --api groq --url https://blog.example.com/article --prompt "Extract the author and publication date."
+    ```
+
+The tool will first ask for the API type and URL if not provided via options. If the API key is not found in the `.env` file, it will prompt you to enter it.
+
+**Important:** The tool uses Playwright for web scraping. Upon first run, it will check if the necessary Playwright browser dependencies are installed. If they are missing, you will be prompted to run the following command:
+
+```bash
+playwright install --with-deps
+```
+
+Please run this command if prompted to ensure the scraper functions correctly.
+
+## Building and Distributing
+
+This project uses `pyproject.toml` for configuration.
+
+1.  **Install build tools:**
+    ```bash
+    python -m pip install --upgrade build twine
+    ```
+
+2.  **Build the package:**
+    ```bash
+    python -m build
+    ```
+    This will create `dist/` directory with the source distribution (`.tar.gz`) and wheel (`.whl`) files.
+
+3.  **Upload to PyPI:**
+    *   **TestPyPI (Recommended first):**
+        ```bash
+        twine upload --repository testpypi dist/*
+        ```
+        You'll need an account on [TestPyPI](https://test.pypi.org/).
+    *   **PyPI (Live):**
+        ```bash
+        twine upload dist/*
+        ```
+        You'll need an account on [PyPI](https://pypi.org/).
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details. # Add a LICENSE file if you choose one

@@ -13,8 +13,8 @@ from rich.panel import Panel
 from rich.progress import Progress, SpinnerColumn, TextColumn
 from rich.prompt import Prompt, IntPrompt
 
-from .scraper import scrape_website, save_sitemap, SITEMAP_FILENAME
-from .ai_clients import (
+from scraper import scrape_website, save_sitemap, SITEMAP_FILENAME
+from ai_clients import (
     get_gemini_client,
     get_groq_client,
     get_openai_client,
