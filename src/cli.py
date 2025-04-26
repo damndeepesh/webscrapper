@@ -14,7 +14,7 @@ from rich.panel import Panel
 from rich.progress import Progress, SpinnerColumn, TextColumn
 from rich.prompt import Prompt, IntPrompt
 
-from scraper import scrape_website, save_sitemap, SITEMAP_FILENAME
+from scraper import scrape_website, save_sitemap # Removed SITEMAP_FILENAME import
 from ai_clients import (
     get_gemini_client,
     get_groq_client,
@@ -32,6 +32,8 @@ from ai_clients import (
 console = Console()
 
 # .env file handling is now managed within ai_clients.py using appdirs
+
+DEFAULT_SITEMAP_FILENAME = "sitemap.xml" # Define default filename here
 
 def check_playwright_installation():
     """Checks if Playwright browsers seem to be installed."""
@@ -192,8 +194,8 @@ def main(prompt, sitemap_depth):
 
     # --- Save Sitemap --- 
     if sitemap_data:
-        save_sitemap(sitemap_data, SITEMAP_FILENAME)
-        console.print(f":world_map: Sitemap saved to [bold cyan]{SITEMAP_FILENAME}[/bold cyan]")
+        save_sitemap(sitemap_data, DEFAULT_SITEMAP_FILENAME) # Use local constant
+        console.print(f":world_map: Sitemap saved to [bold cyan]{DEFAULT_SITEMAP_FILENAME}[/bold cyan]") # Use local constant
     else:
         console.print("[yellow]Warning:[/yellow] Sitemap could not be generated or was empty.")
 
