@@ -3,14 +3,31 @@ import google.generativeai as genai
 from groq import Groq
 from openai import OpenAI
 import ollama
-from dotenv import load_dotenv
+from dotenv import load_dotenv, set_key, find_dotenv
 from typing import Optional
+from pathlib import Path
+from appdirs import user_config_dir
 
-# Load environment variables from .env file
-load_dotenv()
+# Define the application name and author for appdirs
+APP_NAME = "AIWebScraperCLI"
+APP_AUTHOR = "AIWebScraperCLI"
+
+# Get the user-specific config directory
+CONFIG_DIR = Path(user_config_dir(APP_NAME, APP_AUTHOR))
+CONFIG_DIR.mkdir(parents=True, exist_ok=True) # Ensure the directory exists
+
+# Define the path to the .env file within the config directory
+DOTENV_PATH = CONFIG_DIR / ".env"
+
+# Create .env if it doesn't exist
+if not DOTENV_PATH.is_file():
+    DOTENV_PATH.touch()
+
+# Load environment variables from the specific .env file
+load_dotenv(dotenv_path=DOTENV_PATH)
 
 def get_api_key(api_type: str) -> Optional[str]:
-    """Gets the API key for the specified service from environment variables."""
+    """Gets the API key for the specified service from environment variables loaded from the user config dir."""
     if api_type == "gemini":
         return os.getenv("GEMINI_API_KEY")
     elif api_type == "groq":
@@ -21,9 +38,21 @@ def get_api_key(api_type: str) -> Optional[str]:
         # Ollama typically doesn't require an API key in the same way
         # It might rely on the service running locally or a specific base URL
         # Return a placeholder or handle based on how Ollama is set up
-        return "ollama_configured" # Placeholder, adjust as needed
+        # Ollama doesn't use a key in the same way, return placeholder
+        return "ollama_configured"
     else:
         return None
+
+def save_api_key_to_env(api_type: str, api_key: str):
+    """Saves the API key for the specified service to the .env file in the user config dir."""
+    env_var_name = f"{api_type.upper()}_API_KEY"
+    try:
+        set_key(dotenv_path=DOTENV_PATH, key_to_set=env_var_name, value_to_set=api_key)
+        print(f"Saved {api_type.capitalize()} API key to {DOTENV_PATH}")
+        # Reload dotenv after saving to update the current environment
+        load_dotenv(dotenv_path=DOTENV_PATH, override=True)
+    except Exception as e:
+        print(f"Error saving API key to {DOTENV_PATH}: {e}")
 
 def get_gemini_client(api_key: str):
     """Configures and returns the Gemini client."""

@@ -2,6 +2,7 @@ import asyncio
 import os
 import aiohttp # Use aiohttp for async requests
 import json
+from pathlib import Path # Import Path
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin, urlparse
 from crawl4ai import AsyncWebCrawler
@@ -9,14 +10,17 @@ from typing import Optional, List, Dict, Set, Tuple
 
 # Define target file extensions
 TARGET_EXTENSIONS = ['.pdf', '.jpg', '.jpeg', '.png', '.gif', '.doc', '.docx', '.xls', '.xlsx', '.ppt', '.pptx', '.zip', '.rar']
-DOWNLOAD_DIR = 'downloads'
-SITEMAP_FILENAME = 'sitemap.json'
 
-async def download_file(session: aiohttp.ClientSession, url: str, target_dir: str):
+# Use pathlib for cross-platform paths
+BASE_DIR = Path.cwd() # Or choose a more specific base if needed
+DOWNLOAD_DIR = BASE_DIR / 'downloads'
+SITEMAP_PATH = BASE_DIR / 'sitemap.json' # Path object for the sitemap file
+
+async def download_file(session: aiohttp.ClientSession, url: str, target_dir: Path): # Use Path type hint
     """Downloads a single file asynchronously from a URL using aiohttp."""
     try:
-        # Ensure the target directory exists
-        os.makedirs(target_dir, exist_ok=True)
+        # Ensure the target directory exists using pathlib
+        target_dir.mkdir(parents=True, exist_ok=True)
 
         # Get the filename from the URL
         parsed_url = urlparse(url)
@@ -25,7 +29,7 @@ async def download_file(session: aiohttp.ClientSession, url: str, target_dir: st
             # Try to get filename from Content-Disposition header later if possible
             filename = f"downloaded_file_{os.urandom(4).hex()}{os.path.splitext(parsed_url.path)[1]}" # Keep extension if present
 
-        filepath = os.path.join(target_dir, filename)
+        filepath = target_dir / filename # Use pathlib for joining paths
 
         print(f"Attempting download: {url} -> {filepath}")
         async with session.get(url, allow_redirects=True) as response:
@@ -40,7 +44,7 @@ async def download_file(session: aiohttp.ClientSession, url: str, target_dir: st
                         # Basic sanitization
                         header_filename = header_filename.strip().replace('/', '_').replace('\\', '_')
                         if header_filename:
-                            filepath = os.path.join(target_dir, header_filename)
+                            filepath = target_dir / header_filename # Use pathlib here too
                             print(f"Using filename from header: {header_filename}")
 
                 with open(filepath, 'wb') as f:
@@ -49,7 +53,7 @@ async def download_file(session: aiohttp.ClientSession, url: str, target_dir: st
                         if not chunk:
                             break
                         f.write(chunk)
-                print(f"Successfully downloaded {os.path.basename(filepath)}")
+                print(f"Successfully downloaded {filepath.name}") # Use pathlib's name attribute
                 return True
             else:
                 print(f"Error downloading {url}: Status {response.status}")
@@ -130,14 +134,14 @@ async def generate_sitemap(start_url: str, max_depth: int = 1) -> List[str]:
     print(f"Sitemap generation complete. Found {len(sitemap_links)} unique internal URLs.")
     return sorted(list(sitemap_links))
 
-def save_sitemap(sitemap_data: List[str], filename: str = SITEMAP_FILENAME):
-    """Saves the sitemap data to a JSON file."""
+def save_sitemap(sitemap_data: List[str], filepath: Path = SITEMAP_PATH): # Use Path type hint and default
+    """Saves the sitemap data to a JSON file using pathlib."""
     try:
-        with open(filename, 'w', encoding='utf-8') as f:
+        with open(filepath, 'w', encoding='utf-8') as f:
             json.dump(sitemap_data, f, indent=4, ensure_ascii=False)
-        print(f"Sitemap successfully saved to {filename}")
+        print(f"Sitemap successfully saved to {filepath}")
     except IOError as e:
-        print(f"Error saving sitemap to {filename}: {e}")
+        print(f"Error saving sitemap to {filepath}: {e}")
     except Exception as e:
         print(f"An unexpected error occurred while saving sitemap: {e}")
 

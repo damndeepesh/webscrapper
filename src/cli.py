@@ -6,8 +6,9 @@ import asyncio
 import os
 import subprocess
 import sys
+from pathlib import Path # Import Path
 from playwright.sync_api import Error as PlaywrightError
-from dotenv import set_key, find_dotenv
+# Remove find_dotenv and set_key from here, they are handled in ai_clients now
 from rich.console import Console
 from rich.panel import Panel
 from rich.progress import Progress, SpinnerColumn, TextColumn
@@ -23,19 +24,14 @@ from ai_clients import (
     extract_with_groq,
     extract_with_openai,
     extract_with_ollama,
-    get_api_key
+    get_api_key,
+    save_api_key_to_env # Import the new save function
 )
 
 # Initialize Rich Console
 console = Console()
 
-# Find .env file
-dotenv_path = find_dotenv()
-if not dotenv_path:
-    # Create .env file if it doesn't exist
-    with open(".env", "w") as f:
-        pass
-    dotenv_path = find_dotenv()
+# .env file handling is now managed within ai_clients.py using appdirs
 
 def check_playwright_installation():
     """Checks if Playwright browsers seem to be installed."""
@@ -103,10 +99,9 @@ def main(prompt, sitemap_depth):
         if not api_key:
             # Use Prompt.ask for password input
             api_key = Prompt.ask(f'Enter your {api.capitalize()} API key', password=True)
-            # Save the API key to .env file
-            set_key(dotenv_path, env_var_name, api_key)
-            console.print(f":floppy_disk: {api.capitalize()} API key saved to .env file.")
-            # Use the provided key directly
+            # Save the API key to the user config .env file using the new function
+            save_api_key_to_env(api, api_key)
+            # The key is loaded into the environment by save_api_key_to_env, no need to use it directly here
     else:
         # Handle Ollama connection check - get_ollama_client does basic check
         pass # No key needed typically, client setup handles connection

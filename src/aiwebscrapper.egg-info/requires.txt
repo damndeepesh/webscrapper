@@ -10,3 +10,4 @@ beautifulsoup4
 aiohttp
 rich
 playwright
+appdirs

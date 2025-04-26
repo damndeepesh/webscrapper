@@ -1,2 +1,2 @@
 [console_scripts]
-aiwebscrapper = cli:main
+aiwebscrapper = aiwebscrapper.cli:main

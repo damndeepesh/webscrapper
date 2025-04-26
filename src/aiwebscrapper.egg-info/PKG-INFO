@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: aiwebscrapper
-Version: 0.1.6
+Version: 0.1.8
 Summary: A CLI tool to scrape websites, download files, generate sitemaps, and extract info using AI models.
 Author-email: Deepesh <damndeepesh@tutanota.com>
 License: MIT License
@@ -29,6 +29,7 @@ Requires-Dist: beautifulsoup4
 Requires-Dist: aiohttp
 Requires-Dist: rich
 Requires-Dist: playwright
+Requires-Dist: appdirs
 Dynamic: license-file
 
 # AI Web Scraper CLI

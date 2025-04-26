@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "aiwebscrapper"
-version = "0.1.6" # Fixed import error and incremented version
+version = "0.1.8" # Corrected entry point, use appdirs for .env, pathlib for paths
 authors = [
   { name="Deepesh", email="damndeepesh@tutanota.com" }, # Updated placeholder
 ]
@@ -35,6 +35,7 @@ dependencies = [
     "aiohttp",
     "rich",
     "playwright",
+    "appdirs", # Added for user config directory
 ]
 
 [project.urls]
@@ -42,7 +43,7 @@ dependencies = [
 "Bug Tracker" = "https://github.com/damndeepesh/webscrapper/issues" # Updated placeholder
 
 [project.scripts]
-aiwebscrapper = "cli:main"
+aiwebscrapper = "aiwebscrapper.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]  # look in the src/ directory for packages
